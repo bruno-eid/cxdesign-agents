@@ -1,0 +1,46 @@
+# Dependências
+node_modules/
+venv/
+__pycache__/
+*.pyc
+.Python
+
+# Ambientes
+.env
+.env.local
+.env.*.local
+*.env
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Sistema Operacional
+.DS_Store
+Thumbs.db
+*.log
+
+# Outputs temporários
+outputs/**/*.tmp
+outputs/**/*.draft
+outputs/**/_temp/
+
+# Credenciais e tokens
+*.key
+*.pem
+secrets/
+credentials/
+
+# Build e cache
+dist/
+build/
+*.egg-info/
+.pytest_cache/
+.coverage
+
+# Figma MCP (manter configuração, ignorar cache)
+.mcp-cache/
+*.mcp.lock
