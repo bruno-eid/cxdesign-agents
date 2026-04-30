@@ -7,376 +7,254 @@ import {
   Brain,
   Palette,
   Shield,
-  Plus,
-  MoreHorizontal,
-  Clock,
-  User,
-  AlertCircle,
+  ArrowRight,
   CheckCircle2,
-  Filter,
+  Loader2,
+  Activity,
+  Zap,
+  Play
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { toast } from 'sonner';
 
-// Definição das fases
+// As 5 Fases do Pipeline
 const phases = [
-  {
-    id: 'strategist',
-    name: 'Estrategista',
-    icon: Sparkles,
-    color: 'bg-purple-500',
-    textColor: 'text-purple-700',
-    bgLight: 'bg-purple-50',
-    borderColor: 'border-purple-200',
-  },
-  {
-    id: 'researcher',
-    name: 'Pesquisador',
-    icon: Search,
-    color: 'bg-blue-500',
-    textColor: 'text-blue-700',
-    bgLight: 'bg-blue-50',
-    borderColor: 'border-blue-200',
-  },
-  {
-    id: 'architect',
-    name: 'Arquiteto',
-    icon: Brain,
-    color: 'bg-cyan-500',
-    textColor: 'text-cyan-700',
-    bgLight: 'bg-cyan-50',
-    borderColor: 'border-cyan-200',
-  },
-  {
-    id: 'visual',
-    name: 'Visual',
-    icon: Palette,
-    color: 'bg-green-500',
-    textColor: 'text-green-700',
-    bgLight: 'bg-green-50',
-    borderColor: 'border-green-200',
-  },
-  {
-    id: 'validator',
-    name: 'Validador',
-    icon: Shield,
-    color: 'bg-orange-500',
-    textColor: 'text-orange-700',
-    bgLight: 'bg-orange-50',
-    borderColor: 'border-orange-200',
-  },
+  { id: 'strategist', name: '01. Estratégia', icon: Sparkles, color: 'text-blue-400', border: 'border-blue-500/30', bg: 'bg-blue-500/10', glow: 'shadow-[0_0_15px_rgba(59,130,246,0.1)]' },
+  { id: 'researcher', name: '02. Pesquisa', icon: Search, color: 'text-brand-400', border: 'border-brand-500/30', bg: 'bg-brand-500/10', glow: 'shadow-[0_0_15px_rgba(139,92,246,0.1)]' },
+  { id: 'architect', name: '03. Arquitetura', icon: Brain, color: 'text-cyan-400', border: 'border-cyan-500/30', bg: 'bg-cyan-500/10', glow: 'shadow-[0_0_15px_rgba(6,182,212,0.1)]' },
+  { id: 'visual', name: '04. Visual', icon: Palette, color: 'text-orange-400', border: 'border-orange-500/30', bg: 'bg-orange-500/10', glow: 'shadow-[0_0_15px_rgba(249,115,22,0.1)]' },
+  { id: 'validator', name: '05. Validação', icon: Shield, color: 'text-emerald-400', border: 'border-emerald-500/30', bg: 'bg-emerald-500/10', glow: 'shadow-[0_0_15px_rgba(16,185,129,0.1)]' },
 ];
 
-// Dados mockados de tarefas
-const mockTasks = {
-  strategist: [
-    {
-      id: '1',
-      title: 'Definir objetivos do projeto',
-      description: 'Alinhar expectativas com stakeholders',
-      priority: 'high',
-      assignee: 'João Silva',
-      dueDate: '2024-05-15',
-      status: 'in-progress',
-    },
-    {
-      id: '2',
-      title: 'Análise de concorrentes',
-      description: 'Mapear principais players do mercado',
-      priority: 'medium',
-      assignee: 'Maria Santos',
-      dueDate: '2024-05-18',
-      status: 'todo',
-    },
-    {
-      id: '3',
-      title: 'Definir KPIs',
-      description: 'Estabelecer métricas de sucesso',
-      priority: 'high',
-      assignee: 'Pedro Costa',
-      dueDate: '2024-05-20',
-      status: 'todo',
-    },
-  ],
-  researcher: [
-    {
-      id: '4',
-      title: 'Entrevistas com usuários',
-      description: 'Realizar 10 entrevistas em profundidade',
-      priority: 'high',
-      assignee: 'Ana Lima',
-      dueDate: '2024-05-22',
-      status: 'in-progress',
-    },
-    {
-      id: '5',
-      title: 'Pesquisa quantitativa',
-      description: 'Survey com 200+ respondentes',
-      priority: 'medium',
-      assignee: 'Carlos Souza',
-      dueDate: '2024-05-25',
-      status: 'todo',
-    },
-  ],
-  architect: [
-    {
-      id: '6',
-      title: 'Mapa de jornada',
-      description: 'Documentar jornada atual do usuário',
-      priority: 'high',
-      assignee: 'Beatriz Alves',
-      dueDate: '2024-05-28',
-      status: 'done',
-    },
-    {
-      id: '7',
-      title: 'Arquitetura de informação',
-      description: 'Estruturar hierarquia de conteúdo',
-      priority: 'high',
-      assignee: 'Rafael Dias',
-      dueDate: '2024-06-01',
-      status: 'in-progress',
-    },
-  ],
-  visual: [
-    {
-      id: '8',
-      title: 'Design System',
-      description: 'Criar componentes base',
-      priority: 'high',
-      assignee: 'Juliana Rocha',
-      dueDate: '2024-06-05',
-      status: 'todo',
-    },
-  ],
-  validator: [
-    {
-      id: '9',
-      title: 'Testes de usabilidade',
-      description: 'Validar protótipos com usuários',
-      priority: 'medium',
-      assignee: 'Lucas Martins',
-      dueDate: '2024-06-10',
-      status: 'todo',
-    },
-  ],
-};
+export default function KanbanAgentsPage() {
+  const [projectInput, setProjectInput] = useState('');
+  const [currentPhaseIdx, setCurrentPhaseIdx] = useState(0);
+  const [loadingPhase, setLoadingPhase] = useState<string | null>(null);
+  
+  // Estado para guardar o histórico de outputs dos agentes
+  const [pipelineData, setPipelineData] = useState<Record<string, any>>({});
+  
+  const [error, setError] = useState('');
 
-const priorityConfig = {
-  high: { label: 'Alta', variant: 'destructive' as const },
-  medium: { label: 'Média', variant: 'default' as const },
-  low: { label: 'Baixa', variant: 'secondary' as const },
-};
+  // Roda o agente correspondente à fase atual
+  const runAgentForPhase = async (phaseIdx: number) => {
+    const phaseId = phases[phaseIdx].id;
+    setLoadingPhase(phaseId);
+    setError('');
 
-const statusConfig = {
-  todo: { label: 'A Fazer', icon: AlertCircle, color: 'text-muted-foreground' },
-  'in-progress': { label: 'Em Progresso', icon: Clock, color: 'text-blue-500' },
-  done: { label: 'Concluído', icon: CheckCircle2, color: 'text-green-500' },
-};
+    // Prepara o contexto: envia o briefing inicial + handoffs anteriores
+    let contextToAgent = `Projeto Original: ${projectInput}\n`;
+    if (phaseIdx > 0) {
+      const prevPhaseId = phases[phaseIdx - 1].id;
+      const prevOutput = pipelineData[prevPhaseId];
+      if (prevOutput?.handoff) {
+         contextToAgent += `\nInstruções da fase anterior: ${prevOutput.handoff}`;
+      }
+    }
 
-export default function KanbanPage() {
-  const [tasks] = useState(mockTasks);
-  const [selectedPhase, setSelectedPhase] = useState<string | null>(null);
+    try {
+      const res = await fetch('/api/orchestrator', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ briefing: contextToAgent, phase: phaseId }),
+      });
 
-  const getTaskCount = (phaseId: string) => {
-    return tasks[phaseId as keyof typeof tasks]?.length || 0;
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Erro na execução do agente');
+
+      setPipelineData((prev) => ({
+        ...prev,
+        [phaseId]: data.result
+      }));
+
+      toast.success(`Agente ${phases[phaseIdx].name} concluiu a tarefa!`);
+
+    } catch (err: any) {
+      setError(err.message);
+      toast.error('Ocorreu um erro ao acionar o agente.', { description: err.message });
+    } finally {
+      setLoadingPhase(null);
+    }
   };
 
-  const getCompletedCount = (phaseId: string) => {
-    return tasks[phaseId as keyof typeof tasks]?.filter(t => t.status === 'done').length || 0;
+  const approveAndNext = () => {
+    if (currentPhaseIdx < phases.length - 1) {
+      setCurrentPhaseIdx(prev => prev + 1);
+      toast.info('Gateway Aprovado!', { description: 'Handoff enviado para a próxima fase.' });
+    } else {
+      toast.success('Projeto Finalizado com Sucesso!', { description: 'Todas as fases do pipeline foram aprovadas.' });
+    }
   };
 
   return (
-    <div className="space-y-6">
+    <div className="max-w-[1600px] mx-auto space-y-8 pb-20 pt-4">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-4xl font-bold tracking-tight">Kanban de Fases</h1>
-          <p className="text-muted-foreground mt-2">
-            Visualize e gerencie tarefas por fase do CX Operating System
-          </p>
+      <div className="glass-panel p-8 rounded-3xl border-white/10 relative overflow-hidden">
+        <div className="absolute right-0 top-0 opacity-10">
+          <Activity className="w-64 h-64 text-brand-500" />
         </div>
-        <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm">
-            <Filter className="mr-2 h-4 w-4" />
-            Filtros
-          </Button>
-          <Button size="sm">
-            <Plus className="mr-2 h-4 w-4" />
-            Nova Tarefa
-          </Button>
+        <div className="relative z-10 max-w-3xl">
+          <Badge variant="outline" className="bg-brand-500/10 text-brand-400 border-brand-500/30 px-3 py-1 mb-4">
+            <Zap className="w-4 h-4 mr-1 inline" /> Pipeline Multiagentes End-to-End
+          </Badge>
+          <h1 className="text-4xl font-bold tracking-tight mb-3 text-gradient">
+            CRM de Design com IA
+          </h1>
+          <p className="text-muted-foreground text-lg">
+            Descreva seu projeto no primeiro card e acompanhe a execução dos agentes por cada fase. Aprove os artefatos (Gateways) para avançar.
+          </p>
         </div>
       </div>
 
-      {/* Stats Cards */}
-      <div className="grid gap-4 md:grid-cols-5">
-        {phases.map((phase) => {
+      {error && (
+        <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400">
+          {error}
+        </div>
+      )}
+
+      {/* Kanban Board Horizontal Scroll */}
+      <div className="flex gap-6 overflow-x-auto pb-8 snap-x scroll-smooth custom-scrollbar">
+        {phases.map((phase, idx) => {
           const Icon = phase.icon;
-          const total = getTaskCount(phase.id);
-          const completed = getCompletedCount(phase.id);
-          const progress = total > 0 ? Math.round((completed / total) * 100) : 0;
+          const isActive = idx === currentPhaseIdx;
+          const isPast = idx < currentPhaseIdx;
+          const isFuture = idx > currentPhaseIdx;
+          const phaseData = pipelineData[phase.id];
+          const isLoading = loadingPhase === phase.id;
 
           return (
-            <Card
-              key={phase.id}
-              className={`cursor-pointer transition-all hover:shadow-lg ${
-                selectedPhase === phase.id ? 'ring-2 ring-primary' : ''
-              }`}
-              onClick={() => setSelectedPhase(selectedPhase === phase.id ? null : phase.id)}
+            <div 
+              key={phase.id} 
+              className={`flex-shrink-0 w-[420px] snap-center flex flex-col gap-4 transition-all duration-700 ease-in-out ${isFuture ? 'opacity-40 grayscale blur-[1px]' : 'opacity-100'} ${isActive ? 'scale-100' : 'scale-[0.98]'}`}
             >
-              <CardHeader className="pb-3">
-                <div className="flex items-center justify-between">
-                  <div className={`p-2 rounded-lg ${phase.color} text-white`}>
-                    <Icon className="h-5 w-5" />
+              {/* Column Header */}
+              <div className={`p-4 rounded-2xl border ${isActive ? phase.border : 'border-white/5'} ${isActive ? phase.bg : 'bg-white/5'} ${isActive ? phase.glow : ''} backdrop-blur-md shadow-lg flex items-center justify-between transition-colors`}>
+                <div className="flex items-center gap-3">
+                  <div className={`p-2 rounded-lg bg-background shadow-inner ${phase.color}`}>
+                    <Icon className="w-5 h-5" />
                   </div>
-                  <span className="text-2xl font-bold">{total}</span>
+                  <h3 className={`font-bold ${isActive ? 'text-foreground' : 'text-muted-foreground'}`}>{phase.name}</h3>
                 </div>
-              </CardHeader>
-              <CardContent>
-                <p className="font-medium mb-2">{phase.name}</p>
-                <div className="flex items-center justify-between text-sm text-muted-foreground">
-                  <span>{completed} concluídas</span>
-                  <span>{progress}%</span>
+                {isPast && <CheckCircle2 className="w-5 h-5 text-emerald-400 animate-in zoom-in" />}
+              </div>
+
+              {/* Column Content Area */}
+              <div className={`flex-1 glass-card p-6 rounded-2xl border-white/10 flex flex-col gap-4 min-h-[450px] transition-all ${isActive ? 'ring-1 ring-white/10 shadow-xl' : ''}`}>
+                
+                {/* 1. Input Box (Only for Phase 0 if not started, or context display for others) */}
+                {idx === 0 && !phaseData && !isLoading && (
+                  <div className="flex-1 flex flex-col animate-in fade-in slide-in-from-bottom-4">
+                    <label className="text-sm font-semibold mb-2 text-brand-400 flex items-center gap-2">
+                      Descreva seu Desafio:
+                    </label>
+                    <textarea 
+                      value={projectInput}
+                      onChange={(e) => setProjectInput(e.target.value)}
+                      placeholder="Ex: Quero criar um aplicativo de finanças focado em gamificação para o público jovem da geração Z..."
+                      className="flex-1 bg-background/60 border border-white/10 rounded-xl p-4 text-sm text-foreground focus:ring-2 focus:ring-brand-500/50 focus:border-brand-500/50 focus:shadow-[0_0_20px_rgba(139,92,246,0.15)] transition-all outline-none resize-none leading-relaxed"
+                    />
+                  </div>
+                )}
+
+                {/* 2. Loading State */}
+                {isLoading && (
+                  <div className="flex-1 flex flex-col items-center justify-center text-center space-y-6 animate-in fade-in">
+                    <div className="relative">
+                      <div className={`absolute inset-0 blur-2xl opacity-40 ${phase.bg.replace('10', '50')}`} />
+                      <Loader2 className={`w-12 h-12 animate-spin relative z-10 ${phase.color}`} />
+                    </div>
+                    <div>
+                      <p className={`font-bold text-lg ${phase.color}`}>Processando Inteligência...</p>
+                      <p className="text-sm text-muted-foreground mt-2">Correlacionando contexto e gerando artefatos</p>
+                    </div>
+                  </div>
+                )}
+
+                {/* 3. Output State (Agent Response) */}
+                {phaseData && !isLoading && (
+                  <div className="flex-1 space-y-5 overflow-y-auto pr-2 custom-scrollbar animate-in fade-in slide-in-from-bottom-8 duration-500">
+                    <h4 className="font-extrabold text-xl text-foreground mb-4 border-b border-white/5 pb-2">{phaseData.title}</h4>
+                    
+                    {/* Render dynamic properties based on the JSON response */}
+                    {Object.entries(phaseData).map(([key, value]) => {
+                      if (key === 'title' || key === 'handoff' || key === 'decision') return null;
+                      
+                      return (
+                        <div key={key} className="bg-background/40 hover:bg-background/60 transition-colors rounded-xl p-4 border border-white/5">
+                          <span className="text-xs text-muted-foreground uppercase font-bold mb-3 block tracking-widest flex items-center gap-2">
+                            <div className={`w-1.5 h-1.5 rounded-full ${phase.bg.replace('10', '100')} ${phase.color}`} />
+                            {key.replace('_', ' ')}
+                          </span>
+                          {Array.isArray(value) ? (
+                            <ul className="space-y-2.5">
+                              {value.map((item, i) => (
+                                <li key={i} className="text-sm flex items-start gap-3 group">
+                                  <ArrowRight className="w-4 h-4 text-brand-400 mt-0.5 shrink-0 transition-transform group-hover:translate-x-1" />
+                                  <span className="text-foreground/90 leading-relaxed group-hover:text-foreground transition-colors">{item}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          ) : (
+                            <p className="text-sm text-foreground/90 font-medium leading-relaxed">{String(value)}</p>
+                          )}
+                        </div>
+                      );
+                    })}
+
+                    {(phaseData.handoff || phaseData.decision) && (
+                      <div className={`rounded-xl p-5 mt-6 border ${phase.border} ${phase.bg} relative overflow-hidden`}>
+                        <div className="absolute top-0 right-0 w-16 h-16 bg-white/5 rounded-bl-full" />
+                        <span className="text-xs font-bold uppercase tracking-wider block mb-2 opacity-80">Gateway (Handoff)</span>
+                        <p className={`text-sm font-medium leading-relaxed ${phase.color}`}>
+                          "{phaseData.decision || phaseData.handoff}"
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* 4. Action Buttons */}
+                <div className="mt-auto pt-5 border-t border-white/5">
+                  {!phaseData && isActive && (
+                    <Button 
+                      onClick={() => runAgentForPhase(idx)}
+                      disabled={idx === 0 && !projectInput.trim()}
+                      className={`w-full font-bold shadow-lg text-white transition-all hover:scale-[1.02] ${idx === 0 ? 'bg-blue-600 hover:bg-blue-500' : 'bg-brand-600 hover:bg-brand-500'}`}
+                      size="lg"
+                    >
+                      <Play className="w-4 h-4 mr-2" />
+                      Acionar Agente {phase.name.split('.')[1]}
+                    </Button>
+                  )}
+                  
+                  {phaseData && isActive && (
+                    <div className="flex gap-3 animate-in slide-in-from-bottom-4">
+                      <Button variant="outline" className="w-1/3 bg-background/50 hover:bg-red-500/10 hover:text-red-400 border-white/10 hover:border-red-500/30">
+                        Recusar
+                      </Button>
+                      <Button 
+                        onClick={approveAndNext}
+                        className="w-2/3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold shadow-[0_0_15px_rgba(16,185,129,0.3)] hover:shadow-[0_0_20px_rgba(16,185,129,0.5)] transition-all"
+                      >
+                        Aprovar Gateway <ArrowRight className="w-4 h-4 ml-2" />
+                      </Button>
+                    </div>
+                  )}
+
+                  {isPast && (
+                    <div className="text-center p-3 text-sm font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 rounded-xl flex items-center justify-center gap-2">
+                      <CheckCircle2 className="w-5 h-5" /> Fase Concluída e Aprovada
+                    </div>
+                  )}
                 </div>
-              </CardContent>
-            </Card>
+
+              </div>
+            </div>
           );
         })}
       </div>
-
-      {/* Kanban Board */}
-      <div className="flex gap-4 overflow-x-auto pb-4">
-        {phases
-          .filter((phase) => !selectedPhase || phase.id === selectedPhase)
-          .map((phase) => {
-            const Icon = phase.icon;
-            const phaseTasks = tasks[phase.id as keyof typeof tasks] || [];
-
-            return (
-              <div key={phase.id} className="flex-shrink-0 w-80">
-                <Card className={`${phase.borderColor} border-t-4`}>
-                  <CardHeader>
-                    <CardTitle className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <div className={`p-1.5 rounded ${phase.color} text-white`}>
-                          <Icon className="h-4 w-4" />
-                        </div>
-                        <span className="text-base">{phase.name}</span>
-                      </div>
-                      <Badge variant="secondary">{phaseTasks.length}</Badge>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-3">
-                    {phaseTasks.length === 0 ? (
-                      <div className="text-center py-8 text-muted-foreground">
-                        <p className="text-sm">Nenhuma tarefa</p>
-                      </div>
-                    ) : (
-                      phaseTasks.map((task) => {
-                        const StatusIcon = statusConfig[task.status as keyof typeof statusConfig].icon;
-                        return (
-                          <Card
-                            key={task.id}
-                            className={`${phase.bgLight} border ${phase.borderColor} hover:shadow-md transition-shadow cursor-pointer`}
-                          >
-                            <CardContent className="p-4 space-y-3">
-                              {/* Header */}
-                              <div className="flex items-start justify-between">
-                                <h4 className="font-semibold text-sm leading-tight flex-1">
-                                  {task.title}
-                                </h4>
-                                <DropdownMenu>
-                                  <DropdownMenuTrigger asChild>
-                                    <Button variant="ghost" size="icon" className="h-6 w-6 -mt-1">
-                                      <MoreHorizontal className="h-4 w-4" />
-                                    </Button>
-                                  </DropdownMenuTrigger>
-                                  <DropdownMenuContent align="end">
-                                    <DropdownMenuLabel>Ações</DropdownMenuLabel>
-                                    <DropdownMenuSeparator />
-                                    <DropdownMenuItem>Editar</DropdownMenuItem>
-                                    <DropdownMenuItem>Mover</DropdownMenuItem>
-                                    <DropdownMenuItem>Atribuir</DropdownMenuItem>
-                                    <DropdownMenuSeparator />
-                                    <DropdownMenuItem className="text-destructive">
-                                      Excluir
-                                    </DropdownMenuItem>
-                                  </DropdownMenuContent>
-                                </DropdownMenu>
-                              </div>
-
-                              {/* Description */}
-                              <p className="text-xs text-muted-foreground line-clamp-2">
-                                {task.description}
-                              </p>
-
-                              {/* Priority Badge */}
-                              <div className="flex items-center gap-2">
-                                <Badge
-                                  variant={priorityConfig[task.priority as keyof typeof priorityConfig].variant}
-                                  className="text-xs"
-                                >
-                                  {priorityConfig[task.priority as keyof typeof priorityConfig].label}
-                                </Badge>
-                                <div className={`flex items-center gap-1 text-xs ${statusConfig[task.status as keyof typeof statusConfig].color}`}>
-                                  <StatusIcon className="h-3 w-3" />
-                                  <span>{statusConfig[task.status as keyof typeof statusConfig].label}</span>
-                                </div>
-                              </div>
-
-                              {/* Footer */}
-                              <div className="flex items-center justify-between pt-2 border-t">
-                                <div className="flex items-center gap-1.5">
-                                  <Avatar className="h-6 w-6">
-                                    <AvatarFallback className="text-xs">
-                                      {task.assignee.split(' ').map(n => n[0]).join('')}
-                                    </AvatarFallback>
-                                  </Avatar>
-                                  <span className="text-xs text-muted-foreground">
-                                    {task.assignee.split(' ')[0]}
-                                  </span>
-                                </div>
-                                <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                                  <Clock className="h-3 w-3" />
-                                  {new Date(task.dueDate).toLocaleDateString('pt-BR', {
-                                    day: '2-digit',
-                                    month: 'short',
-                                  })}
-                                </div>
-                              </div>
-                            </CardContent>
-                          </Card>
-                        );
-                      })
-                    )}
-
-                    {/* Add Task Button */}
-                    <Button
-                      variant="ghost"
-                      className={`w-full ${phase.textColor} hover:${phase.bgLight}`}
-                      size="sm"
-                    >
-                      <Plus className="mr-2 h-4 w-4" />
-                      Adicionar Tarefa
-                    </Button>
-                  </CardContent>
-                </Card>
-              </div>
-            );
-          })}
-      </div>
+      
     </div>
   );
 }
-
-// Made with Bob

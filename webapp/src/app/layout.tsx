@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import { AppLayout } from '@/components/layout/AppLayout';
+import './globals.css';
+import { ThemeProvider } from '@/components/providers/ThemeProvider';
+import { Toaster } from 'sonner';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -17,12 +19,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pt-BR">
+    <html lang="pt-BR" suppressHydrationWarning>
       <body className={inter.className}>
-        <AppLayout>{children}</AppLayout>
+        <ThemeProvider>
+          {children}
+          <Toaster position="bottom-right" theme="dark" richColors toastOptions={{
+            style: { background: 'rgba(10, 10, 10, 0.8)', backdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.1)' }
+          }} />
+        </ThemeProvider>
       </body>
     </html>
   );
 }
-
-// Made with Bob

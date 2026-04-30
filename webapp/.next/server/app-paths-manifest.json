@@ -1,5 +1,19 @@
 {
   "/_not-found/page": "app/_not-found/page.js",
-  "/page": "app/page.js",
-  "/projects/new/page": "app/projects/new/page.js"
+  "/agents/page": "app/agents/page.js",
+  "/approvals/page": "app/approvals/page.js",
+  "/api/orchestrator/route": "app/api/orchestrator/route.js",
+  "/poc/page": "app/poc/page.js",
+  "/kanban/page": "app/kanban/page.js",
+  "/reports/page": "app/reports/page.js",
+  "/(app)/cx-brain/page": "app/(app)/cx-brain/page.js",
+  "/(app)/projects/new/page": "app/(app)/projects/new/page.js",
+  "/(app)/dashboard/page": "app/(app)/dashboard/page.js",
+  "/(app)/settings/page": "app/(app)/settings/page.js",
+  "/(app)/projects/page": "app/(app)/projects/page.js",
+  "/(app)/projects/[id]/page": "app/(app)/projects/[id]/page.js",
+  "/(auth)/login/page": "app/(auth)/login/page.js",
+  "/(auth)/register/page": "app/(auth)/register/page.js",
+  "/(marketing)/page": "app/(marketing)/page.js",
+  "/(app)/project/[id]/page": "app/(app)/project/[id]/page.js"
 }
