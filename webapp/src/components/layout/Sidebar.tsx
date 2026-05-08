@@ -11,6 +11,9 @@ import {
   ChevronLeft,
   ChevronRight,
   Sparkles,
+  Bot,
+  Workflow,
+  TestTube2
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from './ThemeToggle';
@@ -19,6 +22,9 @@ import { useState } from 'react';
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
   { name: 'Projetos', href: '/projects', icon: FolderKanban },
+  { name: 'Pipeline AI', href: '/kanban', icon: Workflow },
+  { name: 'Agentes', href: '/agents', icon: Bot },
+  { name: 'PoC', href: '/poc', icon: TestTube2 },
   { name: 'CX Brain', href: '/cx-brain', icon: Brain },
   { name: 'Configurações', href: '/settings', icon: Settings },
 ];

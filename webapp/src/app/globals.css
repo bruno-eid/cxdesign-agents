@@ -7,7 +7,7 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sans);
+  --font-heading: var(--font-outfit);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -151,23 +151,60 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased selection:bg-brand-500/30 selection:text-brand-50;
   }
   html {
     @apply font-sans;
   }
+  
+  /* Typography Hierarchy */
+  h1 {
+    @apply text-4xl md:text-5xl font-extrabold tracking-tight text-foreground leading-tight font-heading;
+  }
+  h2 {
+    @apply text-3xl font-bold tracking-tight text-foreground/90 leading-snug font-heading;
+  }
+  h3 {
+    @apply text-2xl font-semibold tracking-tight text-foreground/80 leading-snug font-heading;
+  }
+  h4 {
+    @apply text-lg font-semibold tracking-wide text-foreground/80 leading-normal font-heading;
+  }
+  p {
+    @apply text-base text-muted-foreground leading-relaxed;
+  }
+  small, .text-caption {
+    @apply text-sm font-medium text-muted-foreground/80 leading-none;
+  }
 }
 
 @layer utilities {
+  /* Cards Hierarchy */
   .glass-panel {
-    @apply bg-background/40 backdrop-blur-xl border border-white/10;
+    @apply bg-background/40 backdrop-blur-xl border border-white/10 shadow-2xl;
   }
   .glass-card {
-    @apply bg-background/60 backdrop-blur-lg border border-white/5;
+    @apply bg-background/60 backdrop-blur-lg border border-white/5 shadow-lg hover:shadow-xl hover:border-white/10 transition-all duration-300;
   }
+  .card-primary {
+    @apply bg-card border-border shadow-md rounded-2xl p-6;
+  }
+  .card-secondary {
+    @apply bg-secondary/30 border-transparent shadow-sm rounded-2xl p-6;
+  }
+  .card-outline {
+    @apply bg-transparent border-2 border-border shadow-none rounded-2xl p-6 hover:border-brand-500/50 transition-colors;
+  }
+
+  /* Text Hierarchy Extras */
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-400 via-purple-400 to-indigo-400;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-400 via-purple-400 to-indigo-400 font-extrabold;
   }
+  .text-highlight {
+    @apply text-brand-400 font-semibold;
+  }
+
+  /* Patterns */
   .bg-grid-white {
     background-size: 40px 40px;
     background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),

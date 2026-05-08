@@ -1,0 +1,182 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Project {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  briefing    String?
+  status      String   @default("active") // active, paused, completed, archived
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  squads      Squad[]
+  files       File[]
+  
+  @@map("projects")
+}
+
+model Squad {
+  id          String   @id @default(uuid())
+  projectId   String
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  
+  phase       Int      // 0-4 (Fase 0 a Fase 4)
+  name        String   // "Estrategista", "Pesquisador", etc.
+  status      String   @default("pending") // pending, in_progress, completed, approved, rejected
+  
+  startedAt   DateTime?
+  completedAt DateTime?
+  approvedAt  DateTime?
+  
+  agents      Agent[]
+  
+  @@map("squads")
+  @@index([projectId])
+}
+
+model Agent {
+  id          String   @id @default(uuid())
+  squadId     String
+  squad       Squad    @relation(fields: [squadId], references: [id], onDelete: Cascade)
+  
+  name        String   // Nome do agente
+  type        String   // macro, sub
+  role        String   // boundary-mapper, user-researcher, etc.
+  
+  status      String   @default("pending") // pending, running, completed, failed
+  
+  input       Json?    // Input data para o agente
+  output      Json?    // Output estruturado do agente
+  
+  startedAt   DateTime?
+  completedAt DateTime?
+  
+  executionTime Int?   // Tempo de execução em segundos
+  tokensUsed    Int?   // Tokens consumidos
+  cost          Float? // Custo em USD
+  
+  error       String?  // Mensagem de erro se falhou
+  
+  results     Result[]
+  
+  @@map("agents")
+  @@index([squadId])
+}
+
+model Result {
+  id          String   @id @default(uuid())
+  agentId     String
+  agent       Agent    @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  
+  type        String   // template, artifact, report, analysis
+  title       String
+  content     String   @db.Text
+  
+  metadata    Json?    // Metadados adicionais
+  version     Int      @default(1)
+  
+  createdAt   DateTime @default(now())
+  
+  @@map("results")
+  @@index([agentId])
+}
+
+model File {
+  id          String   @id @default(uuid())
+  projectId   String
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  
+  name        String
+  originalName String
+  path        String
+  type        String   // pdf, docx, txt, image
+  mimeType    String
+  size        Int      // Size in bytes
+  
+  extractedText String? @db.Text
+  
+  uploadedAt  DateTime @default(now())
+  
+  @@map("files")
+  @@index([projectId])
+}
+
+model Gateway {
+  id          String   @id @default(uuid())
+  projectId   String
+  squadId     String
+  
+  phase       Int      // 0-4
+  name        String   // Gateway 1, Gateway 2, etc.
+  
+  status      String   @default("pending") // pending, approved, rejected
+  
+  feedback    String?  @db.Text
+  approvedBy  String?
+  approvedAt  DateTime?
+  
+  createdAt   DateTime @default(now())
+  
+  @@map("gateways")
+  @@index([projectId])
+  @@index([squadId])
+}
+
+model CXBrainEntry {
+  id          String   @id @default(uuid())
+  
+  projectId   String?
+  agentId     String?
+  
+  type        String   // insight, pattern, learning, best-practice
+  category    String   // research, design, validation, etc.
+  
+  title       String
+  content     String   @db.Text
+  
+  embedding   Float[]  // Vector embedding para busca semântica
+  
+  metadata    Json?
+  
+  relevanceScore Float @default(0)
+  usageCount     Int   @default(0)
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@map("cx_brain_entries")
+  @@index([type])
+  @@index([category])
+}
+
+model ApiLog {
+  id          String   @id @default(uuid())
+  
+  endpoint    String
+  method      String
+  statusCode  Int
+  
+  requestBody  Json?
+  responseBody Json?
+  
+  duration    Int      // Duration in ms
+  
+  userId      String?
+  projectId   String?
+  
+  createdAt   DateTime @default(now())
+  
+  @@map("api_logs")
+  @@index([endpoint])
+  @@index([createdAt])
+}
