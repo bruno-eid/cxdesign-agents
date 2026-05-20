@@ -279,19 +279,20 @@ ENTREGA FINAL
 - Documentação de cada agente
 
 ### Sprint 7-9: Integrações e MCPs (Semanas 7-9)
-**Objetivo:** Conectar ferramentas externas
+**Objetivo:** Conectar ferramentas externas do Ecossistema Ágil e Handoff
 
 **Tarefas:**
 - [ ] Integrar Figma MCP (já disponível)
-- [ ] Implementar leitura de arquivos (PDFs, docs)
-- [ ] Configurar Web Search para benchmarks
-- [ ] Criar output para Figma/FigJam
+- [ ] Implementar leitura de arquivos (PDFs, docs) e Web Search
+- [ ] Integrar Analytics (Mixpanel/Amplitude) para Pesquisa Baseada em Dados
+- [ ] Integrar GitHub/GitLab para Handoff de Código Automático
+- [ ] Integrar Jira/Linear para geração automática de User Stories/Tickets
 - [ ] Integrar LLM providers (OpenAI, Anthropic)
 
 **Entregáveis:**
-- Integração Figma completa
-- Sistema de leitura de documentos
-- Múltiplos LLM providers
+- Integração Figma & Github completas
+- Pipeline de Analytics conectada à Fase 1
+- Automação de Tickets no Jira/Linear configurada
 
 ### Sprint 10-12: Testes e Refinamento (Semanas 10-12)
 **Objetivo:** Validar sistema com projetos reais
@@ -311,10 +312,11 @@ ENTREGA FINAL
 
 ## 📈 Métricas de Sucesso
 
-### Métricas de Eficiência
-- **Tempo de Projeto:** Redução de 30-50% vs. processo manual
+### Métricas de Eficiência e Negócio
+- **Time to Market (Code in Production):** Redução do ciclo de ideação à produção em até 60%
+- **Tempo de Projeto (Design):** Redução de 30-50% vs. processo manual
 - **Iterações:** Média de 2-3 por projeto (vs. 5-7 manual)
-- **Retrabalho:** Redução de 60% em mudanças tardias
+- **Retrabalho de Engenharia:** Redução de 80% através da geração de código automatizada
 
 ### Métricas de Qualidade
 - **Acessibilidade:** 100% conformidade WCAG AA
@@ -327,27 +329,26 @@ ENTREGA FINAL
 - **Cliente:** Satisfação > 4.5/5
 - **Stakeholders:** Taxa de aprovação > 90%
 
-## 💰 Modelo de Custos
+## 💰 Modelo de Negócios e Custos (BYOI - Bring Your Own IDE)
 
-### Custos de Infraestrutura (mensal)
-- Backend hosting: $200-500
-- Vector database: $100-300
-- Redis cache: $50-100
-- Monitoramento: $50-100
-- **Total Infra:** $400-1000/mês
+O sistema opera distribuído como um pacote/ferramenta dentro de IDEs Agenticas (Cursor, Antigravity, GitHub Copilot Workspace), o que significa que **não processamos as chamadas LLM em nossos servidores**.
 
-### Custos de APIs (por projeto)
-- OpenAI API: $50-150
-- Anthropic API: $30-80
-- Figma API: Incluído
-- Outros serviços: $20-50
-- **Total APIs:** $100-280/projeto
+### Custos de Infraestrutura e APIs
+- Custo com LLMs (OpenAI/Anthropic): **$0** (O usuário usa a cota da sua IDE)
+- Custo de Infraestrutura Central: **Praticamente Zero** (Software distribuído localmente via MCP)
 
-### ROI Estimado
-- **Custo por projeto:** $500-1280
-- **Economia de tempo:** 40-60 horas
-- **Valor economizado:** $4000-6000 (a $100/hora)
-- **ROI:** 300-500%
+### Estratégia de Monetização
+
+#### 1. Freemium (Foco em Freelancers/Designers Individuais)
+- Acesso gratuito ao MCP Server básico e fluxos da Fase 0 e Fase 1.
+- Comunidade Open Source para templates básicos.
+- **Objetivo:** Adoção massiva, viralidade e padronização do formato "CX Operating System" no mercado.
+
+#### 2. Licenças Pagas (Foco em Agências e Corporativo)
+- Acesso completo às Fases 2, 3 e 4 (incluindo Design-to-Code Compiler).
+- Templates Premium e Metaprompts otimizados para nichos (Fintechs, E-commerce).
+- Licenciamento por 'Seat' (Desenvolvedor/Designer).
+- Suporte a integrações corporativas fechadas (Jira Server corporativo, bancos de dados on-premise).
 
 ## 🎯 Próximos Passos Imediatos
 

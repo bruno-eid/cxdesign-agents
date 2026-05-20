@@ -38,12 +38,11 @@ Sistema multiagentes com **1 CX Master + 5 Macro Agentes + 23 Subagentes Especia
 │   ├── Prototyper (Nível 3)
 │   └── Visual QA (Nível 3) ⭐ NOVO
 │
-└── 🛡️ FASE 4: VALIDADOR (Nível 2 - Coordenação)
-    ├── Requirements Validator (Nível 3)
-    ├── Accessibility Validator (Nível 3)
-    ├── Usability Tester (Nível 3) ⭐ NOVO
-    ├── Performance Analyst (Nível 3) ⭐ NOVO
-    └── QA Analyst (Nível 3)
+└── 🛡️ FASE 4: VALIDADOR E CODE HANDOFF (Nível 2 - Coordenação)
+    ├── Requirements & Accessibility Validator (Nível 3) ⭐ CONSOLIDADO
+    ├── Usability & QA Analyst (Nível 3) ⭐ CONSOLIDADO
+    ├── Performance Analyst (Nível 3)
+    └── Design-to-Code Compiler (Nível 3) ⭐ NOVO
 ```
 
 ## 📌 FASE 0: ESTRATEGISTA (2 Subagentes)
@@ -599,87 +598,58 @@ Materializar com alta fidelidade, aplicar branding e criar conteúdo.
 
 ---
 
-## 🛡️ FASE 4: VALIDADOR (5 Subagentes) ⭐ EXPANDIDO
+## 🛡️ FASE 4: VALIDADOR E CODE HANDOFF (4 Subagentes) ⭐ ATUALIZADO
 
 ### Objetivo
-Garantir compliance, acessibilidade, usabilidade e qualidade.
+Garantir compliance, acessibilidade, usabilidade e gerar código limpo para os desenvolvedores.
 
 ### Subagentes
 
-#### 1. Requirements Validator
-**Função:** Garantir cobertura completa de requisitos
+#### 1. Requirements & Accessibility Validator ⭐ CONSOLIDADO
+**Função:** Garantir cobertura completa de requisitos e Conformidade WCAG 2.1 AA
 
 **Responsabilidades:**
-- Validar requisitos funcionais
-- Validar requisitos não-funcionais
-- Verificar cobertura de casos de uso
-- Identificar gaps
-- Gerar matriz de rastreabilidade
+- Validar requisitos funcionais e não-funcionais
+- Validar contraste de cores e navegação por teclado
+- Testar compatibilidade com leitores de tela
+- Gerar matriz de rastreabilidade e checklist WCAG
 
-**Output:** Matriz de Requisitos + Relatório de Cobertura
+**Output:** Matriz de Requisitos + Relatório de Acessibilidade (WCAG)
 
-#### 2. Accessibility Validator
-**Função:** Conformidade WCAG 2.1 AA
-
-**Responsabilidades:**
-- Validar contraste de cores
-- Verificar navegação por teclado
-- Testar leitores de tela
-- Validar textos alternativos
-- Gerar checklist WCAG
-
-**Output:** Relatório de Acessibilidade + Checklist WCAG
-
-#### 3. Usability Tester ⭐ NOVO
-**Função:** Testar usabilidade com usuários reais
+#### 2. Usability & QA Analyst ⭐ CONSOLIDADO
+**Função:** Avaliar usabilidade real e qualidade de implementação técnica
 
 **Responsabilidades:**
-- Planejar testes de usabilidade
-- Recrutar participantes
-- Conduzir testes (moderados/não-moderados)
-- Analisar resultados
-- Identificar problemas de usabilidade
-- Calcular métricas (taxa de sucesso, tempo, erros)
+- Planejar e analisar resultados de testes de usabilidade
+- Identificar problemas de interação
+- Avaliar implementabilidade técnica do design
+- Verificar a documentação completa do projeto
 
-**Output:** Relatório de Testes de Usabilidade + Métricas
+**Output:** Relatório de Usabilidade + Relatório Final de QA
 
-**Métricas:**
-- Taxa de sucesso por tarefa
-- Tempo médio por tarefa
-- Número de erros
-- Satisfação (SUS - System Usability Scale)
-- Recomendações de melhoria
-
-#### 4. Performance Analyst ⭐ NOVO
-**Função:** Analisar performance e otimização
+#### 3. Performance Analyst
+**Função:** Analisar performance e otimização de assets
 
 **Responsabilidades:**
-- Avaliar tempo de carregamento
-- Analisar tamanho de assets
-- Verificar otimização de imagens
+- Avaliar tempo de carregamento e tamanho de assets
+- Verificar otimização de imagens e fontes
 - Testar performance em diferentes dispositivos
-- Recomendar otimizações
 
 **Output:** Relatório de Performance + Recomendações
 
 **Métricas:**
-- First Contentful Paint (FCP)
-- Largest Contentful Paint (LCP)
-- Time to Interactive (TTI)
-- Cumulative Layout Shift (CLS)
-- Tamanho total de assets
+- First Contentful Paint (FCP), LCP, TTI, CLS
 
-#### 5. QA Analyst
-**Função:** Avaliação geral de qualidade e implementabilidade
+#### 4. Design-to-Code Compiler ⭐ NOVO
+**Função:** Transformar outputs de design em código pronto para produção
 
 **Responsabilidades:**
-- Avaliar implementabilidade técnica
-- Verificar documentação completa
-- Validar handoff para desenvolvimento
-- Identificar riscos de implementação
-- Gerar relatório final
+- Analisar tokens do Design System e exportar em variáveis CSS/Tailwind
+- Gerar componentes base em React, Vue ou SwiftUI a partir dos mockups
+- Sincronizar com repositórios GitHub/GitLab
+- Gerar ou atualizar arquivos Storybook para os componentes
 
-**Output:** Relatório Final de QA + Handoff Técnico
+**Output:** Repositório de Código Atualizado + JSON de Tokens + Componentes Storybook
 
 ---
 

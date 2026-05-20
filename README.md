@@ -1,6 +1,8 @@
 # 🎨 CX Operating System - Sistema Multiagentes de Design
 
-## 📋 Visão Geral
+[![NPM Version](https://img.shields.io/npm/v/cxdesign-agents.svg)](https://www.npmjs.com/package/cxdesign-agents)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![MCP Ready](https://img.shields.io/badge/MCP-Ready-blue.svg)](https://modelcontextprotocol.io/)
 
 Sistema multiagentes autônomo projetado para atuar como uma esteira de engenharia de Customer Experience, substituindo o "achismo" linear por uma arquitetura Hub & Spoke com **29 agentes especializados** organizados em 5 fases sequenciais.
 
@@ -19,14 +21,17 @@ Sistema multiagentes autônomo projetado para atuar como uma esteira de engenhar
 3. 💡 Consulte as [Best Practices](BEST-PRACTICES.md)
 4. 🗂️ Use o [INDEX](INDEX.md) para navegar
 
-**Quer começar um projeto?**
-```bash
-# 1. Copie o template
-cp -r projetos/_template projetos/meu-projeto
+**Quer usar os agentes de design? (Modelo BYOI)**
+O sistema agora funciona no modelo **Bring Your Own IDE** (Antigravity, Cursor, etc). Isso significa que você não paga por uma nova IA; sua própria IDE encarna os agentes de design lendo nosso framework!
 
-# 2. Preencha o briefing
-# 3. Execute Fase 0 (Estrategista)
-# 4. Siga o fluxo sequencial
+```bash
+# 1. Instale e inicie o Servidor MCP do CX Master
+cd backend
+npm install
+npx ts-node src/mcp-server.ts
+
+# 2. Configure sua IDE (Antigravity/Cursor) para ler nosso servidor MCP
+# 3. Peça para a IA da IDE: "Quero começar um novo projeto de design."
 ```
 
 ---
@@ -80,19 +85,17 @@ CX Operating System (29 Agentes)
 │   ├── Prototyper
 │   └── 🆕 Visual QA
 │
-└── 🛡️ Fase 4: Validador (QA Implacável)
-    ├── 🆕 Usability Tester
-    ├── Verificador de Requisitos
-    ├── Validador de Acessibilidade
+└── 🛡️ Fase 4: Validador & Code Handoff (QA Implacável & Entrega de Código)
+    ├── 🆕 Usability Tester & QA (Consolidado)
+    ├── Verificador de Requisitos & Acessibilidade (Consolidado)
     ├── 🆕 Performance Analyst
-    └── QA Analyst
-```
+    └── 🆕 Design-to-Code Compiler (Geração de Componentes e Tokens)
 
-**🆕 10 Novos Subagentes Adicionados:**
-- **Fase 1:** Empathy Map Creator, Golden Thread Generator, Survey Designer
+**🆕 11 Novos Subagentes/Consolidações:**
+- **Fase 1:** Empathy Map Creator, Golden Thread Generator, Survey Designer (Integrados com Analytics/Mixpanel)
 - **Fase 2:** Service Designer (enhanced), Interaction Designer, Content Strategist
 - **Fase 3:** Brand Strategist, UX Writer, Motion Designer, Visual QA
-- **Fase 4:** Usability Tester, Performance Analyst
+- **Fase 4:** Usability Tester, Performance Analyst, Design-to-Code Compiler (Integração Direta com GitHub/Storybook)
 
 📖 [Documentação Completa dos 29 Agentes](ARQUITETURA-AGENTES.md)
 
@@ -215,29 +218,26 @@ Agentes Design/
 
 ---
 
-## 🔌 Integração MCP (Model Context Protocol)
+## 🔌 O CX Master é um Servidor MCP! (Bring Your Own IDE)
 
-O sistema está configurado para usar **Figma Desktop** via MCP, permitindo:
+A grande inovação arquitetural: o nosso backend atua primariamente como um **Servidor MCP Local**.
+Em vez de você pagar os custos de API de 29 agentes no nosso servidor, nós exportamos as "ferramentas da inteligência" (metaprompts e CX Brain) para a sua própria IDE Agentica!
 
-- ✅ **Sincronização automática** de entregáveis com o Figma
-- ✅ **Versionamento** de designs e documentos
-- ✅ **Colaboração em tempo real** com a equipe
-- ✅ **Export/Import** de componentes e assets
+**Ferramentas que injetamos na sua IDE:**
+- ✅ `read_metaprompt`: Transforma sua IDE em um especialista (ex: UX Writer, Service Designer).
+- ✅ `cx_brain_store`: Sua IDE salva as decisões no disco para nunca esquecer do briefing.
+- ✅ `gateway_checkpoint`: A IDE para e avisa você para aprovar antes de pular de Fase.
 
-### Configuração
+### Como conectar (ex: Antigravity/Cursor)
 
-O arquivo `.mcp.json` na raiz do projeto configura dois servidores:
+Configure o seu arquivo cliente de MCP para apontar para o nosso script:
 
 ```json
 {
   "mcpServers": {
-    "figma": {
-      "type": "sse",
-      "url": "http://127.0.0.1:3845/mcp"
-    },
-    "figma-desktop": {
-      "type": "http",
-      "url": "http://127.0.0.1:3845/mcp"
+    "cx-master": {
+      "command": "npx",
+      "args": ["ts-node", "/caminho/para/Agentes Design/backend/src/mcp-server.ts"]
     }
   }
 }
@@ -281,32 +281,32 @@ O arquivo `.mcp.json` na raiz do projeto configura dois servidores:
 
 ---
 
-## 🎯 Fluxo de Trabalho
+## 🎯 Fluxo de Trabalho Ágil (Lean UX & Continuous Delivery)
 
-### Visão Geral
+### Visão Geral de Sprints
+
+O sistema abandonou o modelo cascata lento (Waterfall). O CX Master orquestra as fases dentro de **Sprints Ágeis**, permitindo execução em paralelo e adaptação ao contexto do projeto:
 
 ```
-Briefing → Fase 0 → Gateway 1 → Fase 1 → Gateway 2 → 
-Fase 2 → Gateway 3 → Fase 3 → Gateway 4 → Fase 4 → 
-Gateway 5 → Entrega Final
+[Continuous Discovery]
+Briefing → Fase 0 (Viabilidade Rápida) → Fase 1 (Pesquisa Baseada em Analytics)
+       ↘
+[Continuous Delivery & Handoff]
+Fase 2 (Arquiteto) → Fase 3 (Visual) → Fase 4 (Validação & Code-Gen) → Pull Request/Entrega Final
 ```
 
-### Timeline Típico
+### Timeline de Sprint Típico
 
 | Fase | Duração | Entregáveis Principais |
 |------|---------|------------------------|
-| **Fase 0: Estrategista** | 3-5 dias | Contrato de escopo, Matriz de maturidade |
-| **Gateway 1** | 1 dia | Aprovação de viabilidade |
-| **Fase 1: Pesquisador** | 1-2 semanas | Benchmark, Personas, Jornadas As-Is, Empathy Maps, Golden Thread |
-| **Gateway 2** | 1 dia | Validação de pesquisa |
-| **Fase 2: Arquiteto** | 2-3 semanas | Jornadas To-Be, Service Blueprint, Wireframes, Interactions |
-| **Gateway 3** | 1 dia | Aprovação de arquitetura |
-| **Fase 3: Visual** | 2-3 semanas | Brand Strategy, Mockups, UX Writing, Motion, Protótipos |
-| **Gateway 4** | 1 dia | Aprovação visual |
-| **Fase 4: Validador** | 1 semana | Testes de usabilidade, WCAG, Performance, Handoff |
-| **Gateway 5** | 1 dia | Aprovação final |
+| **Fase 0: Estrategista** | 1-2 dias | Definição de Escopo e Viabilidade |
+| **Fase 1: Pesquisador** | 3-5 dias | Benchmark, Personas, Jornadas As-Is, Análise de Mixpanel/Analytics |
+| **Gateway Ágil** | Contínuo | Validação de Produto (Não-bloqueante) |
+| **Fase 2: Arquiteto** | 1-2 semanas | Fluxos de Usuário, Service Blueprint, Wireframes |
+| **Fase 3: Visual** | 1-2 semanas | Brand Strategy, UI, UX Writing, Componentes |
+| **Fase 4: Validador & Code** | 3-5 dias | Testes de usabilidade, QA Heurístico, **Geração de Código (React/Swift/Tokens)** |
 
-**Total:** 6-10 semanas (dependendo da complexidade)
+**Total:** 1-4 Sprints (1-4 semanas dependendo da complexidade do Épico)
 
 ---
 

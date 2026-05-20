@@ -44,3 +44,6 @@ build/
 # Figma MCP (manter configuração, ignorar cache)
 .mcp-cache/
 *.mcp.lock
+
+# CX Master Local Memory
+.cx_brain.json
