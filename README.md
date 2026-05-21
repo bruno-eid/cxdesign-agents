@@ -26,9 +26,9 @@ O sistema agora funciona no modelo **Bring Your Own IDE** (Antigravity, Cursor, 
 
 ```bash
 # 1. Instale e inicie o Servidor MCP do CX Master
-cd backend
+cd src
 npm install
-npx ts-node src/mcp-server.ts
+npx ts-node mcp-server.ts
 
 # 2. Configure sua IDE (Antigravity/Cursor) para ler nosso servidor MCP
 # 3. Peça para a IA da IDE: "Quero começar um novo projeto de design."
@@ -237,7 +237,7 @@ Configure o seu arquivo cliente de MCP para apontar para o nosso script:
   "mcpServers": {
     "cx-master": {
       "command": "npx",
-      "args": ["ts-node", "/caminho/para/Agentes Design/backend/src/mcp-server.ts"]
+      "args": ["ts-node", "/caminho/para/Agentes Design/src/mcp-server.ts"]
     }
   }
 }

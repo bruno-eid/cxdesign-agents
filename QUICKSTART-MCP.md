@@ -13,9 +13,9 @@ O "Cérebro" do CX Master roda localmente na sua máquina para garantir velocida
 Abra o seu terminal, vá até a pasta do projeto e rode:
 
 ```bash
-cd backend
+cd src
 npm install
-npx ts-node src/mcp-server.ts
+npx ts-node mcp-server.ts
 ```
 
 > [!NOTE]
@@ -34,7 +34,7 @@ Agora precisamos dizer para a sua IDE que ela ganhou superpoderes de UX/UI Desig
    - **Name:** `cx-master`
    - **Type:** `command`
    - **Command:** `npx`
-   - **Args:** `ts-node /caminho/absoluto/para/seu/projeto/backend/src/mcp-server.ts`
+   - **Args:** `ts-node /caminho/absoluto/para/seu/projeto/src/mcp-server.ts`
 
 > [!TIP]
 > Se a sua IDE usar um arquivo de configuração JSON (ex: Claude Code), basta colar isso:
@@ -43,7 +43,7 @@ Agora precisamos dizer para a sua IDE que ela ganhou superpoderes de UX/UI Desig
 >   "mcpServers": {
 >     "cx-master": {
 >       "command": "npx",
->       "args": ["ts-node", "/caminho/absoluto/para/seu/projeto/backend/src/mcp-server.ts"]
+>       "args": ["ts-node", "/caminho/absoluto/para/seu/projeto/src/mcp-server.ts"]
 >     }
 >   }
 > }
